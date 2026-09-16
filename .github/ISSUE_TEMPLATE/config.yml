@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private vulnerability report
+    url: https://github.com/H-H-E/mekasuit-arcana/security/advisories/new
+    about: Do not post security vulnerabilities in public issues.

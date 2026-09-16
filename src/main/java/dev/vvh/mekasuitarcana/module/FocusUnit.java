@@ -1,0 +1,7 @@
+package dev.vvh.mekasuitarcana.module;
+
+import mekanism.api.gear.ICustomModule;
+
+/** Marker module; the central runtime owns spell attributes and FE accounting. */
+public final class FocusUnit implements ICustomModule<FocusUnit> {
+}

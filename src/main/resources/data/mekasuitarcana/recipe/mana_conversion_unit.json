@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LCL",
+    "QBQ",
+    "LCL"
+  ],
+  "key": {
+    "B": { "item": "mekanism:module_base" },
+    "C": { "item": "mekanism:elite_control_circuit" },
+    "L": { "item": "minecraft:lapis_lazuli" },
+    "Q": { "item": "minecraft:quartz" }
+  },
+  "result": {
+    "id": "mekasuitarcana:mana_conversion_unit",
+    "count": 1
+  }
+}

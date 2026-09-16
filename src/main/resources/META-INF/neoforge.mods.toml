@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "mekasuitarcana"
+version = "${file.jarVersion}"
+displayName = "MekaSuit Arcana"
+description = '''
+FE-powered MekaSuit modules that let the suit work as ordinary armor for Iron's
+Spellbooks: suit energy feeds the player's existing mana pool and spell
+attributes, and casting charges the suit. No spell storage, no inscriptions,
+no custom casting.
+'''
+authors = "VvH"
+
+[[dependencies.mekasuitarcana]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.248,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mekasuitarcana]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.21.2)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.mekasuitarcana]]
+modId = "mekanism"
+type = "required"
+versionRange = "[10.7.19,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.mekasuitarcana]]
+modId = "irons_spellbooks"
+type = "required"
+versionRange = "[1.21.1-3.16.3]"
+ordering = "AFTER"
+side = "BOTH"

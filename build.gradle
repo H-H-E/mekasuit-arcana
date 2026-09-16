@@ -1,0 +1,102 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+group = 'dev.vvh.mekasuitarcana'
+version = '0.1.0'
+
+tasks.named('jar', Jar) {
+    manifest.attributes('Implementation-Version': project.version)
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+neoForge {
+    version = '21.1.248'
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+        gameTestServer {
+            type = 'gameTestServer'
+        }
+    }
+
+    mods {
+        mekasuitarcana {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Integration targets are pinned third-party JARs placed in libs/ (see libs/README.md).
+// They are compile-only: the runtime instance supplies the real, loaded mods.
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.11.3'
+}
+
+// The NeoForge loader-booted unit-test target (neoForge.unitTest) is deliberately NOT enabled.
+// Its JUnit launch target starts FML, which resolves this mod's declared dependencies, so it
+// needs the entire runtime closure of Mekanism and Iron's Spellbooks (Titanium, GeckoLib,
+// Curios, ...) on the test classpath. Those mods are compile-only by design here, and pulling
+// their closures into a headless test JVM would prove nothing about behaviour anyway.
+//
+// So the split is: 'gradlew test' runs plain JUnit over loader-free logic (the FE economy in
+// dev.vvh.mekasuitarcana.balance, which must never import Minecraft types), while loader-level
+// and behaviour claims are verified in a real loaded game via the runServer / gameTestServer /
+// runClient runs against the real pack mods.
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 21
+}
+
+// Development-only runtime proof lane.  The main source set stays release-safe:
+// anything under src/runtimeTest is compiled only by runtimeTestJar and is not
+// included by the normal jar/build tasks.
+sourceSets {
+    runtimeTest {
+        java.srcDir('src/runtimeTest/java')
+        resources.srcDir('src/runtimeTest/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += output + sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
+configurations {
+    runtimeTestImplementation.extendsFrom implementation
+    runtimeTestCompileOnly.extendsFrom compileOnly
+    runtimeTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+tasks.register('runtimeTestJar', Jar) {
+    group = 'verification'
+    description = 'Build the disposable runtime-proof jar (main mod plus dev-only harness).'
+    archiveClassifier = 'runtime-test'
+    manifest.attributes('Implementation-Version': project.version)
+    dependsOn runtimeTestClasses
+    from sourceSets.main.output
+    from sourceSets.runtimeTest.output
+}

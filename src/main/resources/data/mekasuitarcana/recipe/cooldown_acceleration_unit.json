@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CRC",
+    "QBQ",
+    "CRC"
+  ],
+  "key": {
+    "B": { "item": "mekanism:module_base" },
+    "C": { "item": "mekanism:elite_control_circuit" },
+    "Q": { "item": "minecraft:quartz" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "id": "mekasuitarcana:cooldown_acceleration_unit",
+    "count": 1
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CLC",
+    "QBQ",
+    "CLC"
+  ],
+  "key": {
+    "B": { "item": "mekanism:module_base" },
+    "C": { "item": "mekanism:ultimate_control_circuit" },
+    "L": { "item": "minecraft:lapis_lazuli" },
+    "Q": { "item": "minecraft:quartz" }
+  },
+  "result": {
+    "id": "mekasuitarcana:focus_unit",
+    "count": 1
+  }
+}
